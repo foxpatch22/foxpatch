@@ -33,55 +33,35 @@ export default function LetsGetStartedForm() {
   const [loading, setLoading] = useState(false);
   const messageRef = useRef<HTMLDivElement | null>(null);
 
-  // ✅ Fixed handleChange without destructuring checked
-  // const handleChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  // ) => {
-  //   const target = e.target;
+  // ✅ Fixed: No destructuring of "checked", safe type narrowing
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const target = e.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+    const { name, value } = target;
 
-  //   if (target instanceof HTMLInputElement && target.type === 'checkbox') {
-  //     setFormData((prev) => ({
-  //       ...prev,
-  //       services: target.checked
-  //         ? [...prev.services, target.value]
-  //         : prev.services.filter((service) => service !== target.value),
-  //     }));
-  //   } else if (target instanceof HTMLInputElement && target.type === 'radio') {
-  //     if (target.checked) {
-  //       setFormData((prev) => ({ ...prev, [target.name]: target.value }));
-  //     }
-  //   } else {
-  //     setFormData((prev) => ({ ...prev, [target.name]: target.value }));
-  //   }
-  // };
-
-  // ✅ Replace your handleChange with this
-const handleChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-) => {
-  const target = e.target;
-  const { name, value } = target;
-
-  if (target instanceof HTMLInputElement) {
-    if (target.type === "checkbox") {
-      setFormData((prev) => ({
-        ...prev,
-        services: target.checked
-          ? [...prev.services, value]
-          : prev.services.filter((service) => service !== value),
-      }));
-    } else if (target.type === "radio") {
-      if (target.checked) {
-        setFormData((prev) => ({ ...prev, [name]: value }));
+    if (target instanceof HTMLInputElement) {
+      if (target.type === 'checkbox') {
+        setFormData((prev) => ({
+          ...prev,
+          services: target.checked
+            ? [...prev.services, value]
+            : prev.services.filter((service) => service !== value),
+        }));
+        return;
       }
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+
+      if (target.type === 'radio') {
+        if (target.checked) {
+          setFormData((prev) => ({ ...prev, [name]: value }));
+        }
+        return;
+      }
     }
-  } else {
-    // for textarea & select
+
+    // For text, textarea, select
     setFormData((prev) => ({ ...prev, [name]: value }));
-  }
-};
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
