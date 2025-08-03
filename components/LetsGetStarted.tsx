@@ -23,8 +23,10 @@ export default function LetsGetStartedForm() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type } = e.target;
+
     if (type === 'checkbox') {
+      const checked = (e.target as HTMLInputElement).checked; // ✅ Safe cast only for checkboxes
       setFormData((prev) => ({
         ...prev,
         services: checked
