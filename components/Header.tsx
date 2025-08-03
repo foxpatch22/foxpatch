@@ -22,7 +22,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
 
-  const dropdownItems: Record<string, { icon: JSX.Element; title: string; desc: string }[]> = {
+  const dropdownItems: Record<string, { icon: React.ReactNode; label: string; href: string }> = {
     PRODUCT: [
       {
         icon: <Orbit className="w-5 h-5 text-indigo-500" />,
