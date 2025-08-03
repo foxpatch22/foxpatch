@@ -23,16 +23,22 @@ export default function LetsGetStartedForm() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
-    const { name, value, type } = e.target;
+    const target = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+    const { name, value, type } = target;
 
     if (type === 'checkbox') {
-      const checked = (e.target as HTMLInputElement).checked; // ✅ Safe cast only for checkboxes
+      const checked = (target as HTMLInputElement).checked;
       setFormData((prev) => ({
         ...prev,
         services: checked
           ? [...prev.services, value]
           : prev.services.filter((service) => service !== value),
       }));
+    } else if (type === 'radio') {
+      const checked = (target as HTMLInputElement).checked;
+      if (checked) {
+        setFormData((prev) => ({ ...prev, [name]: value }));
+      }
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
