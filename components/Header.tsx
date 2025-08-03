@@ -5,7 +5,6 @@ import {
   X,
   Sparkles,
   Layout,
-  MessageCircle,
   Monitor,
   Palette,
   BookOpen,
@@ -15,24 +14,33 @@ import {
   Orbit,
 } from 'lucide-react';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'; // ✅ Next.js router for navigation
+import { useRouter } from 'next/navigation';
+
+interface DropdownItem {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+  href?: string; // optional if you want clickable links later
+}
 
 export default function Header() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
 
-  const dropdownItems: Record<string, { icon: React.ReactNode; label: string; href: string }> = {
+  const dropdownItems: Record<string, DropdownItem[]> = {
     PRODUCT: [
       {
         icon: <Orbit className="w-5 h-5 text-indigo-500" />,
         title: "Cosmikit",
         desc: "Build a custom design system tailored for your product.",
+        href: "/cosmikit",
       },
       {
         icon: <Sparkles className="w-5 h-5 text-purple-500" />,
         title: "Spark",
         desc: "Like Dribbble, but with code integrated into your Cosmikit design system.",
+        href: "/spark",
       },
     ],
     SERVICES: [
@@ -40,16 +48,19 @@ export default function Header() {
         icon: <Layout className="w-5 h-5 text-blue-500" />,
         title: "Product Design",
         desc: "Craft intuitive, scalable, and user‑centric digital experiences.",
+        href: "/services/product-design",
       },
       {
         icon: <Monitor className="w-5 h-5 text-green-500" />,
         title: "Website",
         desc: "Build modern, high‑performing websites to attract and convert.",
+        href: "/services/website",
       },
       {
         icon: <Palette className="w-5 h-5 text-pink-500" />,
         title: "Brand",
         desc: "Design impactful brands that resonate and earn trust.",
+        href: "/services/brand",
       },
     ],
     RESOURCES: [
@@ -57,21 +68,25 @@ export default function Header() {
         icon: <Package className="w-5 h-5 text-orange-500" />,
         title: "Assets",
         desc: "Access templates, illustrations, and creative assets.",
+        href: "/resources/assets",
       },
       {
         icon: <Wrench className="w-5 h-5 text-blue-600" />,
         title: "Tools",
         desc: "Leverage utilities and plugins to speed up your workflow.",
+        href: "/resources/tools",
       },
       {
         icon: <Book className="w-5 h-5 text-teal-600" />,
         title: "Docs",
         desc: "Read guides and documentation to get started quickly.",
+        href: "/resources/docs",
       },
       {
         icon: <BookOpen className="w-5 h-5 text-purple-600" />,
         title: "Design Systems",
         desc: "Explore design systems and patterns you can adapt.",
+        href: "/resources/design-systems",
       },
     ],
   };
@@ -102,8 +117,9 @@ export default function Header() {
               {openMenu === label && (
                 <div className="absolute left-0 mt-6 w-80 bg-white border border-neutral-200 shadow-lg rounded-2xl p-4 z-50">
                   {dropdownItems[label].map((item, idx) => (
-                    <div
+                    <a
                       key={idx}
+                      href={item.href || "#"}
                       className="flex items-start gap-3 p-3 hover:bg-neutral-50 rounded-lg transition"
                     >
                       {item.icon}
@@ -111,19 +127,19 @@ export default function Header() {
                         <p className="font-semibold text-sm text-[#141414]">{item.title}</p>
                         <p className="text-xs text-neutral-600">{item.desc}</p>
                       </div>
-                    </div>
+                    </a>
                   ))}
                 </div>
               )}
             </div>
           ))}
-          <a href="#" className="hover:text-neutral-600">PRICING</a>
+          <a href="/pricing" className="hover:text-neutral-600">PRICING</a>
         </nav>
 
         {/* Right Side: CTA + Hamburger */}
         <div className="flex items-center gap-4">
           <button
-            onClick={() => router.push('/LetsGetStarted')} // ✅ Navigate to new page
+            onClick={() => router.push('/LetsGetStarted')}
             className="px-4 py-2 bg-black text-white rounded-full hover:bg-neutral-800"
           >
             Let's get started
@@ -154,8 +170,9 @@ export default function Header() {
               {openMenu === label && (
                 <div className="mt-2 bg-neutral-50 border border-neutral-200 rounded-xl p-4">
                   {dropdownItems[label].map((item, idx) => (
-                    <div
+                    <a
                       key={idx}
+                      href={item.href || "#"}
                       className="flex items-start gap-3 p-3 hover:bg-neutral-100 rounded-lg transition"
                     >
                       {item.icon}
@@ -163,13 +180,13 @@ export default function Header() {
                         <p className="font-semibold text-sm text-[#141414]">{item.title}</p>
                         <p className="text-xs text-neutral-600">{item.desc}</p>
                       </div>
-                    </div>
+                    </a>
                   ))}
                 </div>
               )}
             </div>
           ))}
-          <a href="#" className="block py-2 text-[#141414] font-medium">PRICING</a>
+          <a href="/pricing" className="block py-2 text-[#141414] font-medium">PRICING</a>
         </div>
       )}
     </header>
