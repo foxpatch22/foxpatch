@@ -33,23 +33,22 @@ export default function LetsGetStartedForm() {
   const [loading, setLoading] = useState(false);
   const messageRef = useRef<HTMLDivElement | null>(null);
 
-  // ✅ Fully generic change handler
+  // ✅ Safe change handler with type narrowing
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
+    const target = e.target;
+    const { name, value } = target;
 
-    if (e.target instanceof HTMLInputElement && e.target.type === 'checkbox') {
+    if (target instanceof HTMLInputElement && target.type === 'checkbox') {
       setFormData((prev) => ({
         ...prev,
-        services: e.target.checked
+        services: target.checked
           ? [...prev.services, value]
           : prev.services.filter((service) => service !== value),
       }));
-    } else if (e.target instanceof HTMLInputElement && e.target.type === 'radio') {
-      if (e.target.checked) {
+    } else if (target instanceof HTMLInputElement && target.type === 'radio') {
+      if (target.checked) {
         setFormData((prev) => ({ ...prev, [name]: value }));
       }
     } else {
