@@ -33,34 +33,35 @@ export default function LetsGetStartedForm() {
   const [loading, setLoading] = useState(false);
   const messageRef = useRef<HTMLDivElement | null>(null);
 
-  // ✅ Fixed: No destructuring of "checked", safe type narrowing
+  // ✅ Explicit type narrowing to fix "checked" build error
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const target = e.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
-    const { name, value } = target;
+    const target = e.target;
 
     if (target instanceof HTMLInputElement) {
       if (target.type === 'checkbox') {
         setFormData((prev) => ({
           ...prev,
           services: target.checked
-            ? [...prev.services, value]
-            : prev.services.filter((service) => service !== value),
+            ? [...prev.services, target.value]
+            : prev.services.filter((service) => service !== target.value),
         }));
         return;
       }
 
       if (target.type === 'radio') {
         if (target.checked) {
-          setFormData((prev) => ({ ...prev, [name]: value }));
+          setFormData((prev) => ({ ...prev, [target.name]: target.value }));
         }
         return;
       }
-    }
 
-    // For text, textarea, select
-    setFormData((prev) => ({ ...prev, [name]: value }));
+      // Text-like input
+      setFormData((prev) => ({ ...prev, [target.name]: target.value }));
+    } else if (target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) {
+      setFormData((prev) => ({ ...prev, [target.name]: target.value }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
