@@ -2,15 +2,28 @@
 import { useState, useRef } from 'react';
 import { CheckCircle } from 'lucide-react';
 
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  company: string;
+  projectDescription: string;
+  startTimeline: string;
+  services: string[];
+  referral: string;
+  team: string;
+  calendlyLink: string;
+}
+
 export default function LetsGetStartedForm() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     firstName: '',
     lastName: '',
     email: '',
     company: '',
     projectDescription: '',
     startTimeline: '',
-    services: [] as string[],
+    services: [],
     referral: '',
     team: '',
     calendlyLink: '',
@@ -23,20 +36,19 @@ export default function LetsGetStartedForm() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
-    const target = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
-    const { name, value, type } = target;
+    const { name, value, type } = e.target;
 
     if (type === 'checkbox') {
-      const checked = (target as HTMLInputElement).checked;
+      const input = e.target as HTMLInputElement;
       setFormData((prev) => ({
         ...prev,
-        services: checked
+        services: input.checked
           ? [...prev.services, value]
           : prev.services.filter((service) => service !== value),
       }));
     } else if (type === 'radio') {
-      const checked = (target as HTMLInputElement).checked;
-      if (checked) {
+      const input = e.target as HTMLInputElement;
+      if (input.checked) {
         setFormData((prev) => ({ ...prev, [name]: value }));
       }
     } else {
