@@ -33,26 +33,25 @@ export default function LetsGetStartedForm() {
   const [loading, setLoading] = useState(false);
   const messageRef = useRef<HTMLDivElement | null>(null);
 
-  // ✅ Safe change handler with type narrowing
+  // ✅ Fixed handleChange without destructuring checked
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const target = e.target;
-    const { name, value } = target;
 
     if (target instanceof HTMLInputElement && target.type === 'checkbox') {
       setFormData((prev) => ({
         ...prev,
         services: target.checked
-          ? [...prev.services, value]
-          : prev.services.filter((service) => service !== value),
+          ? [...prev.services, target.value]
+          : prev.services.filter((service) => service !== target.value),
       }));
     } else if (target instanceof HTMLInputElement && target.type === 'radio') {
       if (target.checked) {
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        setFormData((prev) => ({ ...prev, [target.name]: target.value }));
       }
     } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [target.name]: target.value }));
     }
   };
 
