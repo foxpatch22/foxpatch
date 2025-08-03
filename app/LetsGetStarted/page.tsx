@@ -1,6 +1,5 @@
 import Header from '../../components/Header';
 import LetsGetStarted from '../../components/LetsGetStarted';
-import Footer from '@/components/Footer';
 
 export default function LetsGetStartedPage() {
   return (
