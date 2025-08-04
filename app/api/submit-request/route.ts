@@ -5,19 +5,16 @@ import path from 'path';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const filePath = path.join(process.cwd(), 'data', 'submissions.json');
+
+// Use /tmp (Vercel’s writable directory)
+const filePath = path.join('/tmp', 'submissions.json');
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // Ensure /data folder exists
-    if (!fs.existsSync(path.dirname(filePath))) {
-      fs.mkdirSync(path.dirname(filePath), { recursive: true });
-    }
-
-    // Read existing data
-    let submissions = [];
+    // Read existing data (if any)
+    let submissions: any[] = [];
     if (fs.existsSync(filePath)) {
       const fileData = fs.readFileSync(filePath, 'utf-8');
       submissions = JSON.parse(fileData || '[]');
@@ -30,7 +27,7 @@ export async function POST(req: Request) {
     // ✅ Confirmation email to client
     try {
       await resend.emails.send({
-        from: 'Foxpatch <foxpatch.in@gmail.com>', // must be verified in Resend
+        from: 'Foxpatch <onboarding@resend.dev>', // Use a verified domain in Resend
         to: body.email,
         subject: 'Thanks for reaching out to Foxpatch!',
         html: `
@@ -39,7 +36,6 @@ export async function POST(req: Request) {
           <p>Best,<br>The Foxpatch Team</p>
         `,
       });
-      console.log(`✅ Confirmation email sent to ${body.email}`);
     } catch (mailError) {
       console.error('❌ Failed to send confirmation email:', mailError);
     }
@@ -47,7 +43,7 @@ export async function POST(req: Request) {
     // ✅ Notification email to Foxpatch team
     try {
       await resend.emails.send({
-        from: 'Foxpatch Website <foxpatch.in@gmail.com>', // must be verified
+        from: 'Foxpatch Website <onboarding@resend.dev>', 
         to: 'foxpatch.in@gmail.com',
         subject: 'New Client Submission Received',
         html: `
@@ -64,7 +60,6 @@ export async function POST(req: Request) {
           <p><strong>Submitted At:</strong> ${new Date().toLocaleString()}</p>
         `,
       });
-      console.log(`✅ Notification email sent to foxpatch.in@gmail.com`);
     } catch (mailError) {
       console.error('❌ Failed to send notification email:', mailError);
     }
