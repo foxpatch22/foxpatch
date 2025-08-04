@@ -1,4 +1,4 @@
-// app/api/submit-request/route.ts
+// app/api/delete-submission/route.ts
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
@@ -7,54 +7,26 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-// ✅ POST: Save new submission
-export async function POST(req: Request) {
+// DELETE: Remove submission by ID
+export async function DELETE(req: Request) {
   try {
-    const body = await req.json();
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
 
-    const { error } = await supabase.from('submissions').insert([
-      {
-        first_name: body.firstName,
-        last_name: body.lastName,
-        email: body.email,
-        company: body.company,
-        project_description: body.projectDescription,
-        start_timeline: body.startTimeline,
-        services: body.services,
-        referral: body.referral,
-        team: body.team,
-        calendly_link: body.calendlyLink,
-      },
-    ]);
-
-    if (error) {
-      console.error('❌ Supabase insert error:', error);
-      return NextResponse.json({ error: 'Failed to save submission' }, { status: 500 });
+    if (!id) {
+      return NextResponse.json({ error: 'ID required' }, { status: 400 });
     }
 
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('❌ API POST error:', error);
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
-  }
-}
-
-// ✅ GET: Fetch all submissions
-export async function GET() {
-  try {
-    const { data, error } = await supabase
-      .from('submissions')
-      .select('*')
-      .order('id', { ascending: false });
+    const { error } = await supabase.from('submissions').delete().eq('id', id);
 
     if (error) {
-      console.error('❌ Supabase fetch error:', error);
-      return NextResponse.json({ error: 'Failed to fetch submissions' }, { status: 500 });
+      console.error('❌ Supabase delete error:', error);
+      return NextResponse.json({ error: 'Failed to delete submission' }, { status: 500 });
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json({ message: 'Deleted successfully' });
   } catch (error) {
-    console.error('❌ API GET error:', error);
+    console.error('❌ API DELETE error:', error);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }

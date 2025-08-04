@@ -20,18 +20,24 @@ export default function TeamDashboard() {
   useEffect(() => {
     if (localStorage.getItem("foxpatch-team") !== "true") {
       window.location.href = "/team";
+      return;
     }
+
     fetch('/api/submit-request')
       .then((res) => res.json())
       .then((data) => {
+        if (!Array.isArray(data)) {
+          console.error('API returned non-array:', data);
+          return;
+        }
         const formatted = data.map((item: any) => ({
-          id: item.id, // ✅ real Supabase ID
+          id: item.id,
           name: `${item.first_name} ${item.last_name}`,
           email: item.email,
           company: item.company || '—',
           projectDescription: item.project_description || '—',
           startTimeline: item.start_timeline || '—',
-          service: item.services?.join(', ') || '—',
+          service: Array.isArray(item.services) ? item.services.join(', ') : '—',
           referral: item.referral || '—',
           team: item.team || '—',
           calendlyLink: item.calendly_link || '',
@@ -41,14 +47,11 @@ export default function TeamDashboard() {
       .catch((err) => console.error('Failed to fetch submissions:', err));
   }, []);
 
-  // ✅ Delete by Supabase ID
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this submission?")) return;
 
     try {
-      const response = await fetch(`/api/delete-submission?id=${id}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(`/api/delete-submission?id=${id}`, { method: 'DELETE' });
 
       if (response.ok) {
         setSubmissions((prev) => prev.filter((s) => s.id !== id));
@@ -56,7 +59,7 @@ export default function TeamDashboard() {
         alert('Failed to delete submission.');
       }
     } catch (error) {
-      console.error(error);
+      console.error('❌ Delete error:', error);
       alert('Error deleting submission.');
     }
   };
@@ -93,12 +96,7 @@ export default function TeamDashboard() {
                 <td className="px-4 py-3 border-b">{s.team}</td>
                 <td className="px-4 py-3 border-b">
                   {s.calendlyLink ? (
-                    <a
-                      href={s.calendlyLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 underline"
-                    >
+                    <a href={s.calendlyLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
                       View Booking
                     </a>
                   ) : (
