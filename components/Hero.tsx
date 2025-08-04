@@ -13,7 +13,7 @@ export default function Hero() {
       <div className="relative max-w-7xl mx-auto px-6 pt-28 pb-12">
         {/* Heading + Buttons Row */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <h1 className="text-5xl font-normal leading-tight max-w-3xl">
+          <h1 className="text-4xl sm:text-5xl font-normal leading-tight max-w-3xl text-center md:text-left">
             <span className="text-[#141414]">Designing Products Users </span>
             <span className="text-[#C40006]/[0.8275]">Love</span>
             <span className="text-[#141414]">,</span>
@@ -23,7 +23,7 @@ export default function Hero() {
             <span className="text-[#141414]">.</span>
           </h1>
 
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
             {/* Book a Call */}
             <button
               onClick={() =>
@@ -39,13 +39,13 @@ export default function Hero() {
               onClick={() => router.push('/LetsGetStarted')}
               className="px-6 py-3 bg-black text-white rounded-full font-mono hover:bg-neutral-800"
             >
-              Let's get started
+              Let&apos;s get started
             </button>
           </div>
         </div>
 
         {/* Chips */}
-        <div className="mt-8 flex justify-left">
+        <div className="mt-8 flex justify-center md:justify-start">
           <div className="flex flex-wrap items-center gap-4 text-neutral-700 font-medium">
             <span>We craft</span>
             <MagicTag type="product">Product Design</MagicTag>

@@ -20,7 +20,7 @@ interface DropdownItem {
   icon: React.ReactNode;
   title: string;
   desc: string;
-  href?: string; // optional if you want clickable links later
+  href?: string;
 }
 
 export default function Header() {
@@ -140,9 +140,10 @@ export default function Header() {
         <div className="flex items-center gap-4">
           <button
             onClick={() => router.push('/LetsGetStarted')}
-            className="px-4 py-2 bg-black text-white rounded-full hover:bg-neutral-800"
+            className="px-4 py-2 bg-black text-white rounded-full hover:bg-neutral-800 text-sm md:text-base"
           >
-            Let's get started
+            <span className="hidden sm:inline">Let&apos;s get started</span>
+            <span className="sm:hidden">Start</span>
           </button>
 
           {/* Hamburger Menu */}
