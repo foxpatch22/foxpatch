@@ -69,7 +69,12 @@ export default function LetsGetStartedForm() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/submit-request', {
+      const baseUrl =
+        typeof window !== 'undefined'
+          ? window.location.origin
+          : process.env.NEXT_PUBLIC_SITE_URL || 'https://www.foxpatch.in';
+
+      const response = await fetch(`${baseUrl}/api/submit-request`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
