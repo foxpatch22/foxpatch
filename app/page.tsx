@@ -1,17 +1,16 @@
 import Header from '@/components/layout/Header';
-import Hero from "@/components/sections/Hero";
-// import LogosMarquee from "@/components/common/LogosMarquee";
-import ProductDesign from '@/components/sections/Product-Design';
-import Website from '@/components/sections/Website';
-import Brand from '@/components/ui/Brand';
+import Hero from "@/components/sections/Common/Hero";
+// import LogosMarquee from "@/components/sections/Common/LogosMarquee";
+import ProductDesignIntro from '@/components/sections/ProductDesign/Intro';
+import WebsiteIntro from '@/components/sections/Website/Intro';
+import BrandingIntro from '@/components/sections/Branding/Intro';
 
-import TestimonialProductDesign from '@/components/ui/Testimonial-Product-Design';
-import TestimonialWebsite from '@/components/ui/Testimonial-Website';
-import TestimonialBrand from '@/components/ui/Testimonial-Brand';
+import ProductDesignTestimonial from '@/components/ui/Testimonial-Product-Design';
+import WebsiteTestimonial from '@/components/ui/Testimonial-Website';
+import BrandingTestimonial from '@/components/ui/Testimonial-Brand';
 
 import CallToAction from '@/components/ui/CTA';
 import Footer from '@/components/layout/Footer';
-
 
 export default function Home() {
   return (
@@ -19,12 +18,16 @@ export default function Home() {
       <Header />
       <Hero />
       {/* <LogosMarquee /> */}
-      <ProductDesign />
-      <TestimonialProductDesign />
-      <Website/>
-      <TestimonialWebsite />
-      <Brand/>
-      <TestimonialBrand />
+      
+      <ProductDesignIntro />
+      <ProductDesignTestimonial />
+      
+      <WebsiteIntro />
+      <WebsiteTestimonial />
+      
+      <BrandingIntro />
+      <BrandingTestimonial />
+      
       <CallToAction />
       <Footer />
     </main>
