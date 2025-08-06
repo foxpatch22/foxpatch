@@ -53,7 +53,27 @@ export default function ProductDesignSection() {
         </p>
       </div>
 
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-12">
+      {/* Mobile Grid */}
+      <div className="max-w-7xl mx-auto md:hidden">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+          {steps.map((step, index) => (
+            <motion.div
+              key={index}
+              whileHover={{ scale: 1.05, y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className={`${step.bg} rounded-2xl shadow-lg p-6 flex flex-col items-center justify-center text-center cursor-pointer`}
+            >
+              <step.Icon className={`w-10 h-10 ${step.iconColor} mb-3`} />
+              <h2 className="text-sm font-semibold text-[#141414]">
+                {step.title}
+              </h2>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop Layout */}
+      <div className="hidden md:flex max-w-7xl mx-auto items-start justify-between gap-12 mt-16">
         {/* Left Column */}
         <div className="flex-1 flex flex-col gap-12">
           {steps.slice(0, 4).map((step, index) => (
