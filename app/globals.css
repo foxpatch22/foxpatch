@@ -2,6 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+
 body {
   font-family: sans-serif;
+}
+
+
+
+
+
+
+.cartoon-text {
+  color: #fdfd4f; /* Yellow fill */
+  -webkit-text-stroke: 2px black; /* Black outline */
+  text-shadow: 
+    3px 3px 0px #7c3aed,
+    -3px 3px 0px #7c3aed,
+    3px -3px 0px #7c3aed,
+    -3px -3px 0px #7c3aed;
+}
+
+@keyframes glow {
+  0%, 100% {
+    text-shadow: 
+      3px 3px 0px #7c3aed,
+      -3px 3px 0px #7c3aed,
+      3px -3px 0px #7c3aed,
+      -3px -3px 0px #7c3aed,
+      0 0 8px rgba(124, 58, 237, 0.6);
+  }
+  50% {
+    text-shadow: 
+      3px 3px 0px #7c3aed,
+      -3px 3px 0px #7c3aed,
+      3px -3px 0px #7c3aed,
+      -3px -3px 0px #7c3aed,
+      0 0 20px rgba(124, 58, 237, 0.9);
+  }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
 }

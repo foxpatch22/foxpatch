@@ -1,14 +1,15 @@
 'use client';
 import MagicTag from "../components/MagicTag";
+import BackgroundGrid from "../components/BackgroundGrid";
 import { useRouter } from "next/navigation";
 
 export default function Hero() {
   const router = useRouter();
 
   return (
-    <section className="relative w-full bg-[#fafafa]">
+    <section className="relative w-full bg-[#FDFDF9]">
       {/* Background Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#CACACA_1px,transparent_1px),linear-gradient(to_bottom,#CACACA_1px,transparent_1px)] bg-[size:100px_100px] opacity-30 pointer-events-none"></div>
+      <BackgroundGrid />
 
       <div className="relative max-w-7xl mx-auto px-6 pt-24 pb-12"> {/* reduced pt to 24px */}
         {/* Heading + Buttons Row */}
