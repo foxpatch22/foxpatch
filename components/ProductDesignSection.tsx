@@ -36,13 +36,28 @@ export default function ProductDesignSection() {
 
         {/* Heading */}
         <h2 className="text-4xl md:text-6xl font-bold text-[#141414] leading-snug">
-          How We{" "}
-          <span
-            className={`${permanentMarker.className} cartoon-text animate-glow text-6xl md:text-7xl`}
-          >
-            Design
-          </span>{" "}
-          Products
+          {/* Mobile: line breaks */}
+          <span className="block md:hidden">
+            How We<br />
+            <span
+              className={`${permanentMarker.className} cartoon-text animate-glow text-6xl`}
+            >
+              Design
+            </span>
+            <br />
+            Products
+          </span>
+
+          {/* Desktop: inline */}
+          <span className="hidden md:inline">
+            How We{" "}
+            <span
+              className={`${permanentMarker.className} cartoon-text animate-glow text-6xl md:text-7xl`}
+            >
+              Design
+            </span>{" "}
+            Products
+          </span>
         </h2>
 
         {/* Description */}
