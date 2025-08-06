@@ -33,13 +33,13 @@ export default function Header() {
       {
         icon: <Orbit className="w-5 h-5 text-indigo-500" />,
         title: "Cosmikit",
-        desc: "Build a custom design system tailored for your product.",
+        desc: "Coming Soon.",
         href: "/cosmikit",
       },
       {
         icon: <Sparkles className="w-5 h-5 text-purple-500" />,
         title: "Spark",
-        desc: "Like Dribbble, but with code integrated into your Cosmikit design system.",
+        desc: "Coming Soon.",
         href: "/spark",
       },
     ],
