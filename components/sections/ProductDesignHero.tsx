@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import BackgroundGrid from "@/components/BackgroundGrid";
+import BackgroundGrid from "@/components/common/BackgroundGrid";
 
 export default function ProductDesignHero() {
   const router = useRouter();

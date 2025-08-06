@@ -1,6 +1,6 @@
 'use client';
-import MagicTag from "../components/MagicTag";
-import BackgroundGrid from "../components/BackgroundGrid";
+import MagicTag from "@/components/common/MagicTag";
+import BackgroundGrid from "@/components/common/BackgroundGrid";
 import { useRouter } from "next/navigation";
 
 export default function Hero() {

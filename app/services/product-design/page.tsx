@@ -1,12 +1,12 @@
 'use client';
-import Header from '../../../components/Header';
-import ProductDesignHero from '../../../components/ProductDesignHero';
-import ProductDesignSection from '../../../components/ProductDesignSection';
-import ProductDesignSection2 from '@/components/ProductDesignSection2';
-import ProductDesignSection3 from '@/components/ProductDesignSection3';
+import Header from '@/components/layout/Header';
+import ProductDesignHero from '@/components/sections/ProductDesignHero';
+import ProductDesignSection from '@/components/sections/ProductDesignSection';
+import ProductDesignSection2 from '@/components/sections/ProductDesignSection2';
+import ProductDesignSection3 from '@/components/sections/ProductDesignSection3';
 
-import CallToAction from '../../../components/CTA';
-import Footer from '../../../components/Footer';
+import CallToAction from '@/components/ui/CTA';
+import Footer from '@/components/layout/Footer';
 
 export default function ProductDesignPage() {
   return (
