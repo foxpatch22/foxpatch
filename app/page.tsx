@@ -2,7 +2,7 @@ import Header from '@/components/layout/Header';
 import Hero from "@/components/sections/Common/Hero";
 // import LogosMarquee from "@/components/sections/Common/LogosMarquee";
 import ProductDesignIntro from '@/components/sections/ProductDesign/Intro';
-import WebsiteIntro from '@/components/sections/Website/Intro';
+import WebsiteIntro from '@/components/sections/Website/FeaturesGrid';
 import BrandingIntro from '@/components/sections/Branding/Intro';
 
 import ProductDesignTestimonial from '@/components/ui/Testimonial-Product-Design';

@@ -13,12 +13,12 @@ export default function ProductDesignHero() {
       <div className="relative max-w-7xl mx-auto px-6 pt-28 pb-12 text-center">
         {/* Heading */}
         <h1 className="text-6xl sm:text-7xl font-normal leading-tight max-w-4xl mx-auto">
-          Product Designing
+          Websites Without Limits
         </h1>
 
         {/* Subheading */}
         <p className="mt-6 text-lg sm:text-xl text-neutral-600 max-w-2xl mx-auto">
-          From concept to launch, we can help you at every stage!
+          From concept to launch, we deliver websites that combine beauty, speed, and seamless functionality.
         </p>
 
         {/* CTA Button */}

@@ -13,7 +13,7 @@ export default function ProductDesignHero() {
       <div className="relative max-w-7xl mx-auto px-6 pt-28 pb-12 text-center">
         {/* Heading */}
         <h1 className="text-6xl sm:text-7xl font-normal leading-tight max-w-4xl mx-auto">
-          Product Designing
+          Product Design That Ships
         </h1>
 
         {/* Subheading */}

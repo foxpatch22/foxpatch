@@ -1,10 +1,11 @@
 'use client';
-
 import Header from '@/components/layout/Header';
-import ProductDesignHero from '@/components/sections/ProductDesign/Hero';
-import ProductDesignShowcase from '@/components/sections/ProductDesign/Showcase';
-import ProductDesignApproach from '@/components/sections/ProductDesign/Approach';
-import ProductDesignProcess from '@/components/sections/ProductDesign/Process';
+import Hero from '@/components/sections/Website/Hero';
+import Index from '@/components/sections/Website/index';
+import Showcase from '@/components/sections/Website/Showcase';
+// import Intro from '@/components/sections/Website/FeaturesGrid';
+// import Intro from '@/components/sections/Website/AuroraCapabilities';
+import Intro from '@/components/sections/Website/StellarCapabilities';
 
 import CallToAction from '@/components/ui/CTA';
 import Footer from '@/components/layout/Footer';
@@ -14,10 +15,10 @@ export default function ProductDesignPage() {
     <>
       <Header />
       <main>
-        <ProductDesignHero />
-        <ProductDesignProcess />
-        <ProductDesignApproach />
-        <ProductDesignShowcase />
+        <Hero />
+        <Intro />
+        <Index />
+        <Showcase />
       </main>
       <CallToAction />
       <Footer />

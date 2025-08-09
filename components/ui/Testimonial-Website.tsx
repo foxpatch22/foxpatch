@@ -5,7 +5,7 @@ import { Quote } from 'lucide-react';
 
 export default function TestimonialWebsite() {
   return (
-    <section className="bg-[#FAF9F7] py-12 md:py-16 mt-[-80px]">
+    <section className="bg-white py-12 md:py-16 mt-[-80px]">
       <div className="max-w-6xl mx-auto px-6">
         <div className="bg-[#F2F0E7] rounded-3xl p-12 md:p-16 flex flex-col md:flex-row items-start justify-between shadow-sm">
           <div className="flex-1">

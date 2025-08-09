@@ -8,6 +8,7 @@
     "postinstall": "npm install framer-motion"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@supabase/supabase-js": "^2.53.0",
     "framer-motion": "^12.23.12",
     "lucide-react": "latest",

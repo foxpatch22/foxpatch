@@ -1,4 +1,19 @@
-'use client';
+"use client";
+import Image from "next/image";
+
+const cards = [
+  {
+    media: "/Product%20Design/preview-card-1.avif",
+    title: "SaaS Dashboard Redesign",
+    desc: "We redesigned a complex SaaS dashboard into a clean, intuitive interface. Result:",
+  },
+  {
+    media: "/Product%20Design/preview-card-2.avif",
+    title: "Mobile Health App",
+    badge: "new",
+    desc: "Created a sleek and accessible UI for a health-tech startup. Result:",
+  },
+];
 
 export default function ProductDesign() {
   return (
@@ -13,63 +28,57 @@ export default function ProductDesign() {
         <h2 className="text-2xl md:text-3xl font-normal text-[#141414] leading-snug max-w-4xl">
           At Foxpatch, our product design expertise helps startups build user experiences
           that are as functional as they are beautiful.
-          <br /><br />
-          We combine user‑centric thinking with business goals to create digital products that scale.
+          <br />
+          <br />
+          We combine user-centric thinking with business goals to create digital products that scale.
         </h2>
 
-        {/* Cards Section */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Card 1 */}
-          <div className="bg-purple-100 rounded-2xl p-6">
-            <p className="text-xs uppercase tracking-wider text-neutral-600 mb-4">
-              SaaS Dashboard Redesign
-            </p>
-            <h3 className="text-lg md:text-xl font-normal text-[#141414] mb-4">
-              We redesigned a complex SaaS dashboard into a clean, intuitive interface. Result:
-            </h3>
-            <img
-              src="/Product%20Design/preview-card-1.avif"
-              alt="SaaS Dashboard Example"
-              className="w-full h-auto rounded-lg object-contain"
-            />
-          </div>
+        {/* Cards */}
+        <div className="mt-16 grid md:grid-cols-2 gap-12">
+          {cards.map((card, index) => (
+            <div
+              key={index}
+              className="bg-neutral-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+            >
+              {/* Media */}
+              <div className="w-full h-72 relative mb-6 overflow-hidden rounded-md flex items-center justify-center">
+                {card.media.endsWith(".mp4") ? (
+                  <video
+                    src={card.media}
+                    className="w-full h-full object-cover"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                  />
+                ) : (
+                  <Image
+                    src={card.media}
+                    alt={card.title}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 768px) 560px, 100vw"
+                    priority={index < 2}
+                  />
+                )}
+              </div>
 
-          {/* Card 2 */}
-          <div className="bg-pink-100 rounded-2xl p-6">
-            <p className="text-xs uppercase tracking-wider text-neutral-600 mb-4">
-              Mobile Health App
-            </p>
-            <h3 className="text-lg md:text-xl font-normal text-[#141414] mb-4">
-              Created a sleek and accessible UI for a health‑tech startup. Result:
-            </h3>
-            <img
-              src="/Product%20Design/preview-card-2.avif"
-              alt="Health App Example"
-              className="w-full h-auto rounded-lg object-contain"
-            />
-          </div>
+              {/* Badge */}
+              {card.badge && (
+                <span className="text-xs font-bold text-black bg-yellow-300 px-2 py-0.5 rounded">
+                  {card.badge}
+                </span>
+              )}
 
-          {/* Card 3 (Full Width) */}
-          <div className="bg-neutral-50 rounded-2xl p-6 md:col-span-2 flex flex-col md:flex-row items-center justify-between">
-            {/* Image */}
-            <div className="flex-1">
-              <img
-                src="/Product%20Design/preview-card-3.avif"
-                alt="E‑Commerce Example"
-                className="w-full h-auto rounded-lg object-contain"
-              />
-            </div>
-
-            {/* Text */}
-            <div className="flex-1 mt-8 md:mt-0 md:ml-8">
-              <p className="text-xs uppercase tracking-wider text-neutral-600 mb-4">
-                E‑Commerce
-              </p>
-              <h3 className="text-lg md:text-xl font-normal text-[#141414]">
-                Redesigned the shopping flow for a D2C brand. Result:
+              {/* Title */}
+              <h3 className="mt-3 text-lg font-bold text-[#141414] bg-white inline-block px-2">
+                {card.title}
               </h3>
+
+              {/* Description */}
+              <p className="mt-3 text-neutral-600">{card.desc}</p>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
