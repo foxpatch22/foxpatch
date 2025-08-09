@@ -3,17 +3,11 @@
 import { useEffect, useRef } from 'react';
 
 type Props = {
-  /** Number of particles to draw (auto scales for DPR) */
   count?: number;
-  /** Particle size in CSS px (scaled for DPR) */
   size?: number;
-  /** Particle color(s). Solid or gradient stops. */
   colors?: string[];
-  /** Max parallax offset on mouse move (px) */
   parallax?: number;
-  /** Optional accent glow color for occasional big particles */
   accent?: string;
-  /** Blur of glow (px) */
   glowBlur?: number;
 };
 
@@ -26,7 +20,7 @@ export default function ParallaxParticles({
   glowBlur = 24,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const rafRef = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null); // <-- IMPORTANT
   const mouse = useRef({ x: 0, y: 0 });
   const center = useRef({ x: 0, y: 0 });
   const scrollY = useRef(0);
@@ -43,10 +37,10 @@ export default function ParallaxParticles({
     const particles: Array<{
       x: number;
       y: number;
-      z: number; // depth 0..1
+      z: number;
       r: number;
       c: string;
-      vx: number; // tiny drift
+      vx: number;
       vy: number;
       glow?: boolean;
     }> = [];
@@ -54,7 +48,6 @@ export default function ParallaxParticles({
     const rand = (a: number, b: number) => a + Math.random() * (b - a);
 
     const resize = () => {
-      // parent might not exist at hydration time; fallback to viewport
       const parent = canvas.parentElement;
       const w = parent?.clientWidth ?? window.innerWidth;
       const h = parent?.clientHeight ?? window.innerHeight;
@@ -69,7 +62,7 @@ export default function ParallaxParticles({
     const createParticles = () => {
       particles.length = 0;
       for (let i = 0; i < count; i++) {
-        const z = Math.random(); // 0..1
+        const z = Math.random();
         const r = (size + rand(-0.5, 1.0)) * dpr * (0.6 + z * 1.2);
         const c = colors[(Math.random() * colors.length) | 0];
         particles.push({
@@ -92,7 +85,6 @@ export default function ParallaxParticles({
       const mx = (mouse.current.x - center.current.x / dpr) / dpr;
       const my = (mouse.current.y - center.current.y / dpr) / dpr;
 
-      // vignette / very soft gradient backdrop
       const g = ctx.createRadialGradient(
         cw * 0.5, ch * 0.2, 0,
         cw * 0.5, ch * 0.7, Math.max(cw, ch) * 0.75
@@ -102,21 +94,18 @@ export default function ParallaxParticles({
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, cw, ch);
 
-      // parallax strength from mouse & scroll
       const depthX = (mx / 100) * parallax * dpr;
       const depthY = ((my + scrollY.current * 0.06) / 100) * parallax * dpr;
 
       for (const p of particles) {
-        // drift
         p.x += p.vx;
         p.y += p.vy;
-        // wrap
+
         if (p.x < -10) p.x = cw + 10;
         if (p.x > cw + 10) p.x = -10;
         if (p.y < -10) p.y = ch + 10;
         if (p.y > ch + 10) p.y = -10;
 
-        // parallax offset by depth
         const px = p.x + depthX * (p.z * 2 - 1);
         const py = p.y + depthY * (p.z * 2 - 1);
 
