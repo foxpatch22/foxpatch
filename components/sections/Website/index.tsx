@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { Permanent_Marker } from 'next/font/google';
 import LiquidTabs from '@/components/visuals/LiquidTabs';
+import type { ReactElement, ReactNode, SVGProps } from 'react';
 
 const permanentMarker = Permanent_Marker({ subsets: ['latin'], weight: '400' });
 
@@ -153,7 +154,7 @@ function GlassCard({
 }: {
   title: string;
   points: string[];
-  icon: (p: any) => JSX.Element;
+  icon: (p: SVGProps<SVGSVGElement>) => ReactElement;
   theme: ReturnType<typeof useGlassTheme>;
 }) {
   return (
