@@ -26,17 +26,21 @@ export default function ParallaxParticles({
   glowBlur = 24,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const rafRef = useRef<number>();
+  const rafRef = useRef<number | null>(null);
   const mouse = useRef({ x: 0, y: 0 });
   const center = useRef({ x: 0, y: 0 });
   const scrollY = useRef(0);
 
   useEffect(() => {
-    const canvas = canvasRef.current!;
-    const ctx = canvas.getContext('2d')!;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
     let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
 
-    const particles: {
+    const particles: Array<{
       x: number;
       y: number;
       z: number; // depth 0..1
@@ -45,10 +49,15 @@ export default function ParallaxParticles({
       vx: number; // tiny drift
       vy: number;
       glow?: boolean;
-    }[] = [];
+    }> = [];
+
+    const rand = (a: number, b: number) => a + Math.random() * (b - a);
 
     const resize = () => {
-      const { clientWidth: w, clientHeight: h } = canvas.parentElement!;
+      // parent might not exist at hydration time; fallback to viewport
+      const parent = canvas.parentElement;
+      const w = parent?.clientWidth ?? window.innerWidth;
+      const h = parent?.clientHeight ?? window.innerHeight;
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       canvas.style.width = `${w}px`;
@@ -56,8 +65,6 @@ export default function ParallaxParticles({
       center.current.x = canvas.width / 2;
       center.current.y = canvas.height / 2;
     };
-
-    const rand = (a: number, b: number) => a + Math.random() * (b - a);
 
     const createParticles = () => {
       particles.length = 0;
@@ -79,7 +86,9 @@ export default function ParallaxParticles({
     };
 
     const draw = () => {
-      const cw = canvas.width, ch = canvas.height;
+      const cw = canvas.width;
+      const ch = canvas.height;
+
       const mx = (mouse.current.x - center.current.x / dpr) / dpr;
       const my = (mouse.current.y - center.current.y / dpr) / dpr;
 
@@ -95,9 +104,9 @@ export default function ParallaxParticles({
 
       // parallax strength from mouse & scroll
       const depthX = (mx / 100) * parallax * dpr;
-      const depthY = ((my + (scrollY.current * 0.06)) / 100) * parallax * dpr;
+      const depthY = ((my + scrollY.current * 0.06) / 100) * parallax * dpr;
 
-      for (let p of particles) {
+      for (const p of particles) {
         // drift
         p.x += p.vx;
         p.y += p.vy;
@@ -131,28 +140,32 @@ export default function ParallaxParticles({
       mouse.current.x = (e.clientX - rect.left) * dpr;
       mouse.current.y = (e.clientY - rect.top) * dpr;
     };
-    const onScroll = () => { scrollY.current = window.scrollY || 0; };
+
+    const onScroll = () => {
+      scrollY.current = window.scrollY || 0;
+    };
+
+    const onResize = () => {
+      dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      resize();
+      createParticles();
+    };
 
     resize();
     createParticles();
     rafRef.current = requestAnimationFrame(draw);
 
-    window.addEventListener('resize', () => { dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1)); resize(); createParticles(); });
+    window.addEventListener('resize', onResize);
     window.addEventListener('mousemove', onMouse);
     window.addEventListener('scroll', onScroll, { passive: true });
 
     return () => {
-      cancelAnimationFrame(rafRef.current!);
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+      window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onMouse);
       window.removeEventListener('scroll', onScroll);
     };
   }, [count, size, colors, parallax, accent, glowBlur]);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 -z-10"
-      aria-hidden
-    />
-  );
+  return <canvas ref={canvasRef} className="absolute inset-0 -z-10" aria-hidden />;
 }
