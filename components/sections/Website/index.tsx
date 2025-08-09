@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { Permanent_Marker } from 'next/font/google';
 import LiquidTabs from '@/components/visuals/LiquidTabs';
+import { useMemo, useState, type ReactElement, type SVGProps } from 'react';
 
 const permanentMarker = Permanent_Marker({ subsets: ['latin'], weight: '400' });
 
