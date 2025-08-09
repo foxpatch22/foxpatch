@@ -8,7 +8,6 @@ import {
 } from 'react';
 import { Permanent_Marker } from 'next/font/google';
 import LiquidTabs from '@/components/visuals/LiquidTabs';
-import { useMemo, useState, type ReactElement, type SVGProps } from 'react';
 
 const permanentMarker = Permanent_Marker({ subsets: ['latin'], weight: '400' });
 
@@ -166,18 +165,11 @@ function useGlassTheme(accentHex: string) {
     const c = hexToRgb(accentHex);
 
     return {
-      // nearly transparent tint
       tint: rgba(c, 0.04),
       tintHover: rgba(c, 0.08),
-
-      // lighter border & glow
       border: rgba(c, 0.12),
       glow: rgba(c, 0.10),
-
-      // icons still visible but soft
       icon: rgba(c, 0.65),
-
-      // barely‑there liquid blobs
       blobs: `
         radial-gradient(60% 80% at 20% 15%, ${rgba(c, 0.06)} 0%, transparent 60%),
         radial-gradient(70% 90% at 85% 80%, ${rgba(c, 0.05)} 0%, transparent 65%)
@@ -213,7 +205,6 @@ function GlassCard({
         border: `1px solid ${theme.border}`,
       }}
     >
-      {/* very soft inner shine */}
       <div
         className="pointer-events-none absolute inset-0 rounded-[28px]"
         style={{
@@ -223,7 +214,6 @@ function GlassCard({
         }}
       />
 
-      {/* content */}
       <div className="relative z-10">
         <div
           className="mb-5 inline-flex items-center justify-center rounded-2xl"
@@ -250,7 +240,6 @@ function GlassCard({
         </ul>
       </div>
 
-      {/* hover tint amplifier */}
       <div
         className="absolute inset-0 rounded-[28px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{ background: theme.tintHover }}
@@ -268,7 +257,6 @@ export default function HowWeBuildCards() {
   return (
     <section className="bg-white py-16 md:py-24 px-6">
       <div className="max-w-7xl mx-auto text-center">
-        {/* Heading */}
         <h2 className="text-3xl md:text-5xl font-bold text-[#141414] leading-snug">
           <span className="block md:inline">We Help </span>
           <span className={`${permanentMarker.className} cartoon-text animate-glow text-5xl md:text-6xl`}>
@@ -281,12 +269,10 @@ export default function HowWeBuildCards() {
           We match your goals with the right platform for a site that fits perfectly.
         </p>
 
-        {/* Liquid / glossy segmented control (with your logos inside) */}
         <div className="mt-8">
           <LiquidTabs value={active} onChange={(v) => setActive(v as StackKey)} className="mx-auto" />
         </div>
 
-        {/* Cards */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-left">
           {stack.cards.map((c) => {
             const Icon = Icons[c.icon];
