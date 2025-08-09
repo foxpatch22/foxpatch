@@ -1,9 +1,13 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import {
+  useMemo,
+  useState,
+  type ReactElement,
+  type SVGProps,
+} from 'react';
 import { Permanent_Marker } from 'next/font/google';
 import LiquidTabs from '@/components/visuals/LiquidTabs';
-import type { ReactElement, SVGProps } from 'react';
 
 const permanentMarker = Permanent_Marker({ subsets: ['latin'], weight: '400' });
 
@@ -27,55 +31,90 @@ type Stack = {
 const Icons = {
   rocket: (props: SVGProps<SVGSVGElement>): ReactElement => (
     <svg viewBox="0 0 24 24" {...props}>
-      <path d="M5 15l4 4m10-14c-2-1-6 1-9 4l-4 4c-3 3-5 7-4 9 2 1 6-1 9-4l4-4c3-3 5-7 4-9z"
-        stroke="currentColor" fill="none" strokeWidth="2"/>
+      <path
+        d="M5 15l4 4m10-14c-2-1-6 1-9 4l-4 4c-3 3-5 7-4 9 2 1 6-1 9-4l4-4c3-3 5-7 4-9z"
+        stroke="currentColor"
+        fill="none"
+        strokeWidth="2"
+      />
     </svg>
   ),
   bolt: (props: SVGProps<SVGSVGElement>): ReactElement => (
     <svg viewBox="0 0 24 24" {...props}>
-      <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"
-        stroke="currentColor" fill="none" strokeWidth="2"/>
+      <path
+        d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"
+        stroke="currentColor"
+        fill="none"
+        strokeWidth="2"
+      />
     </svg>
   ),
   search: (props: SVGProps<SVGSVGElement>): ReactElement => (
     <svg viewBox="0 0 24 24" {...props}>
-      <circle cx="11" cy="11" r="7" stroke="currentColor" fill="none" strokeWidth="2"/>
-      <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="2"/>
+      <circle cx="11" cy="11" r="7" stroke="currentColor" fill="none" strokeWidth="2" />
+      <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="2" />
     </svg>
   ),
   package: (props: SVGProps<SVGSVGElement>): ReactElement => (
     <svg viewBox="0 0 24 24" {...props}>
-      <path d="M21 16V8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5"
-        stroke="currentColor" fill="none" strokeWidth="2"/>
+      <path
+        d="M21 16V8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5"
+        stroke="currentColor"
+        fill="none"
+        strokeWidth="2"
+      />
     </svg>
   ),
   chart: (props: SVGProps<SVGSVGElement>): ReactElement => (
     <svg viewBox="0 0 24 24" {...props}>
-      <path d="M3 3v18h18M7 16v-6M12 19v-9M17 14V7"
-        stroke="currentColor" fill="none" strokeWidth="2"/>
+      <path
+        d="M3 3v18h18M7 16v-6M12 19v-9M17 14V7"
+        stroke="currentColor"
+        fill="none"
+        strokeWidth="2"
+      />
     </svg>
   ),
   shield: (props: SVGProps<SVGSVGElement>): ReactElement => (
     <svg viewBox="0 0 24 24" {...props}>
-      <path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"
-        stroke="currentColor" fill="none" strokeWidth="2"/>
+      <path
+        d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"
+        stroke="currentColor"
+        fill="none"
+        strokeWidth="2"
+      />
     </svg>
   ),
   cpu: (props: SVGProps<SVGSVGElement>): ReactElement => (
     <svg viewBox="0 0 24 24" {...props}>
-      <rect x="7" y="7" width="10" height="10" rx="2"
-        stroke="currentColor" fill="none" strokeWidth="2"/>
-      <path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"
-        stroke="currentColor" strokeWidth="2"/>
+      <rect
+        x="7"
+        y="7"
+        width="10"
+        height="10"
+        rx="2"
+        stroke="currentColor"
+        fill="none"
+        strokeWidth="2"
+      />
+      <path
+        d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
     </svg>
   ),
   sparkles: (props: SVGProps<SVGSVGElement>): ReactElement => (
     <svg viewBox="0 0 24 24" {...props}>
-      <path d="M5 12l3-1 1-3 1 3 3 1-3 1-1 3-1-3-3-1zm10-8l1.5 3 3 1.5-3 1.5L15 13l-1.5-3-3-1.5 3-1.5L15 4z"
-        stroke="currentColor" fill="none" strokeWidth="2"/>
+      <path
+        d="M5 12l3-1 1-3 1 3 3 1-3 1-1 3-1-3-3-1zm10-8l1.5 3 3 1.5-3 1.5L15 13l-1.5-3-3-1.5 3-1.5L15 4z"
+        stroke="currentColor"
+        fill="none"
+        strokeWidth="2"
+      />
     </svg>
   ),
-} as const;
+};
 
 /* -------------------- Content ---------------------- */
 const STACKS: Record<StackKey, Stack> = {
@@ -117,7 +156,8 @@ function hexToRgb(hex: string) {
   const n = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16);
   return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
 }
-const rgba = (c: {r:number;g:number;b:number}, a:number) => `rgba(${c.r},${c.g},${c.b},${a})`;
+const rgba = (c: { r: number; g: number; b: number }, a: number) =>
+  `rgba(${c.r},${c.g},${c.b},${a})`;
 
 /** Ultra‑subtle Liquid‑Glass theme (almost clear) */
 function useGlassTheme(accentHex: string) {
@@ -125,14 +165,21 @@ function useGlassTheme(accentHex: string) {
     const c = hexToRgb(accentHex);
 
     return {
+      // nearly transparent tint
       tint: rgba(c, 0.04),
       tintHover: rgba(c, 0.08),
+
+      // lighter border & glow
       border: rgba(c, 0.12),
       glow: rgba(c, 0.10),
+
+      // icons still visible but soft
       icon: rgba(c, 0.65),
+
+      // barely‑there liquid blobs
       blobs: `
-        radial-gradient(60% 80% at 20% 15%, ${rgba(c,0.06)} 0%, transparent 60%),
-        radial-gradient(70% 90% at 85% 80%, ${rgba(c,0.05)} 0%, transparent 65%)
+        radial-gradient(60% 80% at 20% 15%, ${rgba(c, 0.06)} 0%, transparent 60%),
+        radial-gradient(70% 90% at 85% 80%, ${rgba(c, 0.05)} 0%, transparent 65%)
       `,
     };
   }, [accentHex]);
@@ -165,6 +212,7 @@ function GlassCard({
         border: `1px solid ${theme.border}`,
       }}
     >
+      {/* very soft inner shine */}
       <div
         className="pointer-events-none absolute inset-0 rounded-[28px]"
         style={{
@@ -174,6 +222,7 @@ function GlassCard({
         }}
       />
 
+      {/* content */}
       <div className="relative z-10">
         <div
           className="mb-5 inline-flex items-center justify-center rounded-2xl"
@@ -200,6 +249,7 @@ function GlassCard({
         </ul>
       </div>
 
+      {/* hover tint amplifier */}
       <div
         className="absolute inset-0 rounded-[28px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{ background: theme.tintHover }}
@@ -217,6 +267,7 @@ export default function HowWeBuildCards() {
   return (
     <section className="bg-white py-16 md:py-24 px-6">
       <div className="max-w-7xl mx-auto text-center">
+        {/* Heading */}
         <h2 className="text-3xl md:text-5xl font-bold text-[#141414] leading-snug">
           <span className="block md:inline">We Help </span>
           <span className={`${permanentMarker.className} cartoon-text animate-glow text-5xl md:text-6xl`}>
@@ -229,10 +280,12 @@ export default function HowWeBuildCards() {
           We match your goals with the right platform for a site that fits perfectly.
         </p>
 
+        {/* Liquid / glossy segmented control (with your logos inside) */}
         <div className="mt-8">
           <LiquidTabs value={active} onChange={(v) => setActive(v as StackKey)} className="mx-auto" />
         </div>
 
+        {/* Cards */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-left">
           {stack.cards.map((c) => {
             const Icon = Icons[c.icon];
