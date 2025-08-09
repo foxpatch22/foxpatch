@@ -6,7 +6,8 @@
     "build": "next build",
     "start": "next start",
     "postinstall": "npm install framer-motion",
-    "postbuild": "next-sitemap"
+    // "postbuild": "next-sitemap"
+    "postbuild": "npx --yes next-sitemap"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
