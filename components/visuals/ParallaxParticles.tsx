@@ -20,7 +20,7 @@ export default function ParallaxParticles({
   glowBlur = 24,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const rafRef = useRef<number | null>(null); // <-- IMPORTANT
+  const rafRef = useRef<number | null>(null);
   const mouse = useRef({ x: 0, y: 0 });
   const center = useRef({ x: 0, y: 0 });
   const scrollY = useRef(0);
@@ -149,8 +149,7 @@ export default function ParallaxParticles({
     window.addEventListener('scroll', onScroll, { passive: true });
 
     return () => {
-      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
-      window.removeEventListener('resize', onResize);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
       window.removeEventListener('mousemove', onMouse);
       window.removeEventListener('scroll', onScroll);
     };
